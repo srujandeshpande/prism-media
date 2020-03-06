@@ -1,0 +1,51 @@
+{
+	"name": "prism-media",
+	"version": "2.0.0-dev",
+	"description": "Easy-to-use stream-based media transcoding",
+	"main": "dist/index.js",
+	"author": "Amish Shah <amishshah.2k@gmail.com>",
+	"license": "Apache-2.0",
+	"scripts": {
+		"prebuild": "yarn lint",
+		"build": "rimraf dist && tsc",
+		"lint": "eslint src --ext .ts",
+		"pretest": "yarn lint",
+		"test": "jest"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"@types/jest": "^25.1.0",
+		"@types/node": "^13.5.1",
+		"@typescript-eslint/eslint-plugin": "^2.18.0",
+		"@typescript-eslint/parser": "^2.18.0",
+		"eslint": "^6.8.0",
+		"eslint-config-marine": "^6.0.0",
+		"jest": "^25.1.0",
+		"rimraf": "^3.0.1",
+		"ts-jest": "^25.0.0",
+		"typescript": "^3.7.5"
+	},
+	"eslintConfig": {
+		"extends": "marine/node",
+		"parserOptions": {
+			"project": "tsconfig.eslint.json"
+		},
+		"env": {
+			"jest": true
+		}
+	},
+	"renovate": {
+		"extends": [
+			"teal"
+		]
+	},
+	"jest": {
+		"preset": "ts-jest",
+		"testEnvironment": "node",
+		"globals": {
+			"ts-jest": {
+				"tsConfig": "tsconfig.jest.json"
+			}
+		}
+	}
+}
