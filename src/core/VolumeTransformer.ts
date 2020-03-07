@@ -17,7 +17,7 @@ export abstract class VolumeTransformer extends Transform {
 	public volume: number;
 
 	/**
-	 * A buffer that stores an incomplete from previous transformations
+	 * A buffer that stores an incomplete frame from previous transformations
 	 */
 	private _chunk: Buffer;
 
@@ -46,13 +46,6 @@ export abstract class VolumeTransformer extends Transform {
 	 * @param offset The offset/index to write to in the buffer
 	 */
 	protected abstract _writeInt(buffer: Buffer, value: number, offset: number): void;
-
-	/**
-	 * Changes the volume of a PCM frame
-	 * @param value The frame to change the value of
-	 * @returns The frame with adjusted volume
-	 */
-	protected abstract _applyVolume(value: number): number;
 
 	/**
 	 * Creates a new VolumeTransformer
@@ -97,6 +90,15 @@ export abstract class VolumeTransformer extends Transform {
 		this.push(buffer.slice(0, totalLength));
 		return done();
 	}
+
+	/**
+	 * Changes the volume of a PCM frame
+	 * @param value The frame to change the value of
+	 * @returns The frame with adjusted volume
+	 */
+	private _applyVolume(value: number): number {
+		return VolumeTransformer.clamp(value * this.volume, -this._extremum, this._extremum - 1);
+	}
 }
 
 /**
@@ -105,13 +107,6 @@ export abstract class VolumeTransformer extends Transform {
 export class VolumeTransformerS16LE extends VolumeTransformer {
 	protected _bytes = 2;
 	protected _extremum = 2 ** 15;
-
-	protected _applyVolume(value: number): number {
-		return VolumeTransformer.clamp(
-			value * this.volume,
-			-this._extremum, this._extremum - 1
-		);
-	}
 
 	protected _readInt(buffer: Buffer, offset: number): number {
 		return buffer.readInt16LE(offset);
@@ -129,10 +124,6 @@ export class VolumeTransformerS32LE extends VolumeTransformer {
 	protected _bytes = 4;
 	protected _extremum = 2 ** 31;
 
-	protected _applyVolume(value: number): number {
-		return VolumeTransformer.clamp(value * this.volume, -this._extremum, this._extremum - 1);
-	}
-
 	protected _readInt(buffer: Buffer, offset: number): number {
 		return buffer.readInt32LE(offset);
 	}
@@ -149,13 +140,6 @@ export class VolumeTransformerS16BE extends VolumeTransformer {
 	protected _bytes = 2;
 	protected _extremum = 2 ** 15;
 
-	protected _applyVolume(value: number): number {
-		return VolumeTransformer.clamp(
-			value * this.volume,
-			-this._extremum, this._extremum - 1
-		);
-	}
-
 	protected _readInt(buffer: Buffer, offset: number): number {
 		return buffer.readInt16BE(offset);
 	}
@@ -170,10 +154,6 @@ export class VolumeTransformerS16BE extends VolumeTransformer {
 export class VolumeTransformerS32BE extends VolumeTransformer {
 	protected _bytes = 4;
 	protected _extremum = 2 ** 31;
-
-	protected _applyVolume(value: number): number {
-		return VolumeTransformer.clamp(value * this.volume, -this._extremum, this._extremum - 1);
-	}
 
 	protected _readInt(buffer: Buffer, offset: number): number {
 		return buffer.readInt32BE(offset);
