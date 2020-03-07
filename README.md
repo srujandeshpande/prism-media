@@ -1,4 +1,7 @@
 # prism-media
+
+![Tests and Linting](https://github.com/amishshah/prism-media/workflows/Tests%20and%20Linting/badge.svg?branch=ts-rewrite)
+
 > A WIP TypeScript rewrite of prism-media
 
 ## License
