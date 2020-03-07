@@ -6,10 +6,10 @@
 	"author": "Amish Shah <amishshah.2k@gmail.com>",
 	"license": "Apache-2.0",
 	"scripts": {
-		"prebuild": "yarn lint",
+		"prebuild": "npm run lint",
 		"build": "rimraf dist && tsc",
 		"lint": "eslint src --ext .ts",
-		"pretest": "yarn lint",
+		"pretest": "npm run lint",
 		"test": "jest"
 	},
 	"dependencies": {},
