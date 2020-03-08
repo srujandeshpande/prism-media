@@ -21,12 +21,11 @@
 		"removeComments": false,
 		"alwaysStrict": true,
 		"allowSyntheticDefaultImports": true,
-		"pretty": true
+		"pretty": true,
+		"esModuleInterop": true,
 	},
 	"exclude": [
-		"src/**/*.test.ts",
 		"src/**/*.spec.ts",
-		"src/**/*.test.js",
 		"src/**/*.spec.js"
 	]
 }

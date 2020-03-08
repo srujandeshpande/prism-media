@@ -12,7 +12,13 @@
 		"pretest": "npm run lint",
 		"test": "jest"
 	},
-	"dependencies": {},
+	"dependencies": {
+		"@types/ffmpeg-static": "^3.0.0",
+		"duplex-child-process": "^1.0.0"
+	},
+	"peerDependencies": {
+		"ffmpeg-static": "^4.0.1"
+	},
 	"devDependencies": {
 		"@types/jest": "^25.1.0",
 		"@types/node": "^13.5.1",
@@ -32,6 +38,10 @@
 		},
 		"env": {
 			"jest": true
+		},
+		"rules": {
+			"@typescript-eslint/no-require-imports": "off",
+			"@typescript-eslint/no-var-requires": "off"
 		}
 	},
 	"renovate": {
