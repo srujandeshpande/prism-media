@@ -1,6 +1,7 @@
 # Packages
 node_modules/
 dist/
+docs/
 
 # Log files
 logs/
